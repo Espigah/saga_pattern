@@ -1,0 +1,8 @@
+version: '3.7'
+
+services:
+  order_service:
+    build: ./order-service/
+    ports:
+      - 8080:8080
+    

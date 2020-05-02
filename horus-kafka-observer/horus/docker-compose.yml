@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  delivery_service:
+    build: ./delivery-service/
+    volumes:
+      - ./delivery-service/:/app/
+    ports:
+      - 3000:3000
+    

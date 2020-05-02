@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  payment_service:
+    build: ./payment-service/
+    volumes:
+      - ./payment-service/:/app/
+    ports:
+      - 8001:80
+    

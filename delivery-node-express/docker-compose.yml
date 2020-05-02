@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  delivery_service:
+    build: ./delivery-service/
+    volumes:
+      - ./delivery-service/:/app/
+    ports:
+      - 3000:3000
+    environment: 
+      - "DATABASE=mongodb://admin:admin@mongo:27017/db?connectTimeoutMS=200000&authSource=admin"
+    volumes: 
+      - ${PWD}/delivery-service/app:/usr/src/app
+    depends_on: 
+      - mongo
+
+  mongo:
+    image: mongo:3.6.18
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    ports:
+      - "27017:27017"

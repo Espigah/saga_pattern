@@ -1,0 +1,87 @@
+version: '3'
+services:
+#___________________________________________________________________________________Databases
+  mongo:
+    image: mongo:3.6.18
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    ports:
+      - "27017:27017"
+    networks:
+      - compose-network 
+
+  postgres:
+    image: postgres:9.6.17-alpine
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
+  
+  couchdb:
+      image: couchdb
+      ports:
+        - "5984:5984"
+        - '1234:1234'
+        - '4369:4369'
+      environment:
+        COUCHDB_USER: admin
+        COUCHDB_PASSWORD: admin
+
+#___________________________________________________________________________________broker
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    hostname: zookeeper
+
+  kafka:
+    image: wurstmeister/kafka
+    command: [start-kafka.sh]
+    ports:
+      - "9092:9092"
+    hostname: kafka
+    environment:
+      KAFKA_CREATE_TOPICS: "UploadFile:1:1,GetFile:1:1,TrackUpload:1:1,GetEmailContent:1:1"
+      KAFKA_ADVERTISED_HOST_NAME: kafka # docker-machine ip
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_PORT: 9092
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - "zookeeper"
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: kafka:9092
+    depends_on: 
+      - kafka
+  
+#___________________________________________________________________________________ Applications
+  payment_service:
+    build: ./payment-python-fastapi/payment-service/
+    ports:
+      - 8008:80
+    networks:
+      - payment-network 
+
+  delivery_service:
+    build: ./delivery-node-express/delivery-service/
+    ports:
+      - 3000:3000
+
+  order_service:
+    build: ./order-java-micronaut/order-service/
+    ports:
+      - 8080:8080
+
+networks: 
+    compose-network:
+      driver: bridge
+    payment-network:
+      driver: bridge

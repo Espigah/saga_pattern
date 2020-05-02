@@ -44,7 +44,7 @@ services:
       - "9092:9092"
     hostname: kafka
     environment:
-      KAFKA_CREATE_TOPICS: "UploadFile:1:1,GetFile:1:1,TrackUpload:1:1,GetEmailContent:1:1"
+      KAFKA_CREATE_TOPICS: "ORDER_CREATE_EVENT:1:1,ORDER_CREATE_FAILURE_EVENT:1:1,ORDER_BILLED_EVENT:1:1,ORDER_BILLED_FAILURE_EVENT:1:1,ORDER_DELIVERED_EVENT:1:1,ORDER_DELIVERED_FAILURE_EVENT:1:1,INFRA_EVENT:1:1"
       KAFKA_ADVERTISED_HOST_NAME: kafka # docker-machine ip
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_PORT: 9092
@@ -74,6 +74,16 @@ services:
     build: ./delivery-node-express/delivery-service/
     ports:
       - 3000:3000
+    environment: 
+      - "DATABASE=mongodb://admin:admin@mongo:27017/db?connectTimeoutMS=200000&authSource=admin"
+      - "MESSAGE_BROKER=kafka:9092"
+      - "TOPIC_SUCCESS=ORDER_DELIVERED_EVENT"
+      - "TOPIC_FAILURE=DELIVERY_FAILURE"
+      - "TOPIC_TRIGGER=BILLED_ORDER_EVENT"
+      - "TOPIC_UI=UI_EVENT"
+    depends_on: 
+      - mongo
+      - kafka
 
   order_service:
     build: ./order-java-micronaut/order-service/

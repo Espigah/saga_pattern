@@ -9,11 +9,17 @@ services:
       - 3000:3000
     environment: 
       - "DATABASE=mongodb://admin:admin@mongo:27017/db?connectTimeoutMS=200000&authSource=admin"
+      - "MESSAGE_BROKER=kafka:9092"
+      - "TOPIC_SUCCESS=ORDER_DELIVERED_EVENT"
+      - "TOPIC_FAILURE=ORDER_DELIVERED_FAILURE_EVENT"
+      - "TOPIC_TRIGGER=ORDER_BILLED_EVENT"
+      - "TOPIC_INFRA=INFRA_EVENT"
     volumes: 
       - ${PWD}/delivery-service/:/usr/src/
     depends_on: 
       - mongo
-
+      - kafka
+#___________________________________________________________________________________Database
   mongo:
     image: mongo:3.6.18
     environment:
@@ -21,3 +27,35 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: admin
     ports:
       - "27017:27017"
+#___________________________________________________________________________________broker
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    hostname: zookeeper
+
+  kafka:
+    image: wurstmeister/kafka
+    command: [start-kafka.sh]
+    ports:
+      - "9092:9092"
+    hostname: kafka
+    environment:
+      KAFKA_CREATE_TOPICS: "ORDER_CREATE_EVENT:1:1,ORDER_CREATE_FAILURE_EVENT:1:1,ORDER_BILLED_EVENT:1:1,ORDER_BILLED_FAILURE_EVENT:1:1,ORDER_DELIVERED_EVENT:1:1,ORDER_DELIVERED_FAILURE_EVENT:1:1,INFRA_EVENT:1:1"
+      KAFKA_ADVERTISED_HOST_NAME: kafka # docker-machine ip
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_PORT: 9092
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - "zookeeper"
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: kafka:9092
+    depends_on: 
+      - kafka
+  

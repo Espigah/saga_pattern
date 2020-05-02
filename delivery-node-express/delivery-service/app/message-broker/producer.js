@@ -37,7 +37,7 @@ export default {
   sendFailure(data) {
     return send(process.env.TOPIC_FAILURE, data);
   },
-  sendInfra({ where, who, value }) {
-    return send(process.env.INFRA_EVENT, { who, where, value });
+  sendInfra({ where, who, what, value }) {
+    return send(process.env.INFRA_EVENT, { who, where, what, value });
   },
 };

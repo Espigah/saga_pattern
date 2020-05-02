@@ -10,6 +10,7 @@ let scope = {
       producer.sendInfra({
         where: "DELIVERY_SERVICE",
         who: "BROKER",
+        what: "ENABLE",
         value: value,
       });
     },
@@ -21,6 +22,7 @@ let scope = {
       producer.sendInfra({
         where: "DELIVERY_SERVICE",
         who: "DATABASE",
+        what: "ENABLE",
         value: value,
       });
     },

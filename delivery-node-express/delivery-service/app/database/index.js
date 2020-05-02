@@ -1,6 +1,4 @@
-//const MongoClient = require("mongodb").MongoClient;
-
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const options = {
   // useCreateIndex: true,
@@ -16,27 +14,26 @@ console.log(url);
 
 var db = mongoose.connection;
 
-db.on("error", console.error);
+db.on("error", (error) => {
+  console.warn("[ database ]", error);
+  //mongoose.connect(url, options);
+});
 db.once("open", function () {
-  console.log("Conectado ao MongoDB.");
-
-  var Schema = mongoose.Schema;
-
-  var userDataSchema = new Schema(
-    {
-      nome: { type: String, required: true },
-      email: String,
-      telefone: String,
-    },
-    { collection: "contatos" }
-  );
-
-  var Contatos = mongoose.model("UserData", userDataSchema);
-  var item = {
-    nome: "d",
-  };
-  var data = new Contatos(item);
-  data.save();
+  console.log("[ database ]", "connect");
 });
 
-mongoose.connect(url, options);
+let connection;
+const connect = () => {
+  if (connection) {
+    return connection;
+  }
+
+  console.log("[ database ]", "connecting");
+  return (connection = mongoose.connect(url, options));
+};
+
+connection = connect();
+
+export default {
+  connect,
+};

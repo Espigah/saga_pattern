@@ -1,8 +1,9 @@
 {
   "name": "delivery-service",
   "version": "1.0.0",
-  "description": "",
+  "description": "saga",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "./node_modules/.bin/nodemon --ignore node_modules/ app/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,6 +20,7 @@
     "kafka-node": "^5.0.0",
     "mongodb": "^3.5.7",
     "mongoose": "^5.9.11",
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.3",
+    "nvm": "0.0.4"
   }
 }

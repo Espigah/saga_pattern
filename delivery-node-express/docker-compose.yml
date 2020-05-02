@@ -10,7 +10,7 @@ services:
     environment: 
       - "DATABASE=mongodb://admin:admin@mongo:27017/db?connectTimeoutMS=200000&authSource=admin"
     volumes: 
-      - ${PWD}/delivery-service/app:/usr/src/app
+      - ${PWD}/delivery-service/:/usr/src/
     depends_on: 
       - mongo
 

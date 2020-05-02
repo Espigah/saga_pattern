@@ -1,7 +1,11 @@
-require("dotenv").config();
-const express = require("express");
-const consign = require("consign");
-const database = require("./database");
+//import "dotenv" from "dotenv";
+import express from "express";
+import consign from "consign";
+import OrderService from "./order/OrderService.js";
+
+//require("dotenv").config();
+
+//const database = require("./database");
 const app = express();
 
 app.disable("x-powered-by");
@@ -16,20 +20,13 @@ consign({
   .into(app);
 
 app.get("/", (req, res) => {
-// database
-//   .insert({ a: 1 })
-//   .then((a) => {
-//     console.log("find",a);
-//     return database.find({});
-//   })
-//   .then((a) => {
-//     console.log("ok",a);
-//   })
-//   .catch((e) => {
-//     console.log("error",JSON.stringify(e));
-//   });
-
-  res.send("s");
+  OrderService.save({ nome: 1, transaction_id: 2 })
+    .then((a) => {
+      res.send(JSON.stringify(a));
+    })
+    .catch((a) => {
+      res.send(JSON.stringify(a));
+    });
 });
 
 app.listen(process.env.APP_PORT || 3000, () => {

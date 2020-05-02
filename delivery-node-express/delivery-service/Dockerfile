@@ -1,4 +1,4 @@
-FROM node:10
+FROM node:14.1.0
 
 ENV HOME=/usr/src/app
 
@@ -19,4 +19,6 @@ RUN npm audit fix
 COPY ./app .
 
 EXPOSE 3000
-CMD [ "node", "index.js" ]
+#CMD [ "node", "index.js" ]
+
+CMD [ "npm", "start" ]

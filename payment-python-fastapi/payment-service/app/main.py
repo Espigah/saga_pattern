@@ -2,8 +2,9 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
-
-from app.api.payment import payment
+import os
+# from app.api.payment import payment
+from app.payment import payment_service
 
 app = FastAPI()
 
@@ -26,4 +27,5 @@ class Movie(BaseModel):
 
 @app.get('/', response_model=List[Movie])
 async def index():
+    payment_service.execute_payment()  # Saving document
     return fake_movie_db

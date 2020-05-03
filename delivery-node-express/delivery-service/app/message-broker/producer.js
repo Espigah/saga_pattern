@@ -38,6 +38,6 @@ export default {
     return send(process.env.TOPIC_FAILURE, data);
   },
   sendInfra({ where, who, what, value }) {
-    return send(process.env.INFRA_EVENT, { who, where, what, value });
+    return send(process.env.TOPIC_INFRA, { who, where, what, value });
   },
 };

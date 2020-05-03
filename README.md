@@ -1,5 +1,9 @@
 ![TOPOLOGY](./docs/saga.jpg)
 
+# View
+
+![view](./docs/saga_view.jpg)
+
 # Flow
 
 ## Success

@@ -1,34 +1,26 @@
 version: '3.7'
 
 services:
-  payment_service:
-    build: ./payment-service/
+  horus:
+    build: ./horus/
     volumes:
-      - ./payment-service/:/app/
+      - ./horus/:/app/
     ports:
-      - 8001:80
+      - 3000:3000
+    environment: 
+      MESSAGE_BROKER: kafka:9092
+      OBSERVER: >
+        ORDER_CREATE_EVENT
+        ORDER_CREATE_FAILURE_EVENT
+        ORDER_BILLED_EVENT
+        ORDER_BILLED_FAILURE_EVENT
+        ORDER_DELIVERED_EVENT
+        ORDER_DELIVERED_FAILURE_EVENT
+        INFRA_EVENT
+    volumes: 
+      - ${PWD}/horus/:/usr/src/
     depends_on: 
       - kafka
-      - couchdb
-    environment:
-      DATABASE: http://admin:admin@couchdb:5984/
-      MESSAGE_BROKER: kafka:9092
-      TOPIC_SUCCESS: ORDER_BILLED_EVENT
-      TOPIC_FAILURE: ORDER_BILLED_FAILURE_EVENT
-      TOPIC_TRIGGER: ORDER_CREATE_EVENT
-      TOPIC_COMPENSATION_TRIGGER: ORDER_CREATE_FAILURE_EVENT
-      TOPIC_INFRA: INFRA_EVENT
-#___________________________________________________________________________________ database
-  couchdb:
-    image: couchdb
-    ports:
-      - "5984:5984"
-      - '1234:1234'
-      - '4369:4369'
-    environment:
-      COUCHDB_USER: admin
-      COUCHDB_PASSWORD: admin
-
 #___________________________________________________________________________________broker
   zookeeper:
     image: wurstmeister/zookeeper
@@ -58,5 +50,6 @@ services:
       - "9000:9000"
     environment:
       KAFKA_BROKERCONNECT: kafka:9092
-    depends_on:
+    depends_on: 
       - kafka
+  

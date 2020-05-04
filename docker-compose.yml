@@ -65,15 +65,11 @@ services:
 #___________________________________________________________________________________ Applications
   payment_service:
     build: ./payment-python-fastapi/payment-service/
-    ports:
-      - 8008:80
     networks:
       - payment-network 
 
   delivery_service:
     build: ./delivery-node-express/delivery-service/
-    ports:
-      - 3000:3000
     environment: 
       - "DATABASE=mongodb://admin:admin@mongo:27017/db?connectTimeoutMS=200000&authSource=admin"
       - "MESSAGE_BROKER=kafka:9092"
@@ -89,6 +85,25 @@ services:
     build: ./order-java-micronaut/order-service/
     ports:
       - 8080:8080
+
+#___________________________________________________________________________________ WEB
+
+  horus:
+    build: ./horus-kafka-observer/horus/
+    ports:
+      - 3000:3000
+    environment: 
+      MESSAGE_BROKER: kafka:9092
+      OBSERVER: >
+        ORDER_CREATE_EVENT
+        ORDER_CREATE_FAILURE_EVENT
+        ORDER_BILLED_EVENT
+        ORDER_BILLED_FAILURE_EVENT
+        ORDER_DELIVERED_EVENT
+        ORDER_DELIVERED_FAILURE_EVENT
+        INFRA_EVENT
+    depends_on: 
+      - kafka
 
 networks: 
     compose-network:

@@ -1,4 +1,4 @@
-FROM node:10
+FROM node:14.1.0
 
 ENV HOME=/usr/src/app
 
@@ -9,8 +9,7 @@ WORKDIR $HOME
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY package*.json npm-shrinkwrap.json ./
-
-RUN npm ci
+RUN npm ci --progress=false
 RUN npm audit fix
 
 # If you are building your code for production
@@ -20,4 +19,6 @@ RUN npm audit fix
 COPY ./app .
 
 EXPOSE 3000
-CMD [ "node", "index.js" ]
+#CMD [ "node", "index.js" ]
+
+CMD [ "npm", "start" ]

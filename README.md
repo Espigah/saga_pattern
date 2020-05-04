@@ -28,3 +28,10 @@ https://medium.com/@tomasz_96685/saga-pattern-and-microservices-architecture-d4b
 https://microservices.io/patterns/data/saga.html
 
 https://livebook.manning.com/book/microservices-patterns/chapter-4/v-11/
+
+# Utils
+
+```
+docker-compose exec kafka  \
+  bash -c "kafka-console-producer.sh --broker-list localhost:9092 --topic ORDER_CREATE_EVENT ORDER_CREATE_EVENT"
+```

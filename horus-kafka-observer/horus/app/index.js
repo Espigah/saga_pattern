@@ -1,22 +1,35 @@
-require('dotenv').config()
-const express = require('express')
-const consign = require('consign')
-const app = express()
+import express from "express";
+import consign from "consign";
+import socket from "socket.io";
+import http from "http";
+import room from "./room.js";
+import dotenv from "dotenv";
 
 
-app.disable('x-powered-by')
+if (process.env.APP_DEBUG) {
+  dotenv.config();
+}
 
+const app = express();
+const httpClient = http.Server(app);
+const io = socket(httpClient);
+
+app.disable("x-powered-by");
 
 consign({
-    cwd: 'app',
-    verbose: process.env.APP_DEBUG === 'true' || false,
-    locale: 'pt-br'
-}).include('./middlewares/globals').then('../routes').into(app)
-
-app.get('/', (req, res) => {
-    res.send('Hello World');
-  });
-  
-app.listen(process.env.APP_PORT || 3000, () => {
-    console.log('=> Servidor rodando!')
+  cwd: "app",
+  verbose: process.env.APP_DEBUG === "true" || false,
+  locale: "pt-br",
 })
+  .include("./middlewares/globals")
+  .into(app);
+
+app.get("/", function (req, res) {
+  res.send("server is running");
+});
+
+httpClient.listen(3000, function () {
+  console.log("socket listening on port 3000");
+});
+
+room(io);

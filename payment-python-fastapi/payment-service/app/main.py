@@ -5,6 +5,7 @@ from typing import List
 import os
 # from app.api.payment import payment
 from app.payment import payment_service
+from app.infra import infra_service
 
 app = FastAPI()
 
@@ -27,5 +28,17 @@ class Movie(BaseModel):
 
 @app.get('/', response_model=List[Movie])
 async def index():
+    doc = {'name': 'Employee'}
     payment_service.execute_payment()  # Saving document
     return fake_movie_db
+
+
+@app.post('/disable/broker')
+async def disable_broker():
+     infra_service.disable_broker();
+     return True
+
+@app.post('/disable/database')
+async def disable_database():
+     infra_service.disable_batabase();
+     return True

@@ -1,14 +1,17 @@
 {
   "name": "delivery-service",
   "version": "1.0.0",
-  "description": "",
+  "description": "saga",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "start": "./node_modules/.bin/nodemon --ignore node_modules/ app/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@financial-times/health-check": "^1.11.3",
     "compression": "^1.7.4",
     "consign": "^0.1.6",
     "dotenv": "^8.2.0",
@@ -16,7 +19,7 @@
     "helmet": "^3.22.0",
     "http": "0.0.1-security",
     "kafka-node": "^5.0.0",
-    "mongodb": "^3.5.7",
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.3",
+    "socket.io": "^2.3.0"
   }
 }

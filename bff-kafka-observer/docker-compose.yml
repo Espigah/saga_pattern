@@ -1,10 +1,10 @@
 version: '3.7'
 
 services:
-  horus:
-    build: ./horus/
+  bff:
+    build: ./bff/
     volumes:
-      - ./horus/:/app/
+      - ./bff/:/app/
     ports:
       - 3000:3000
     environment: 
@@ -18,7 +18,7 @@ services:
         ORDER_DELIVERED_FAILURE_EVENT
         INFRA_EVENT
     volumes: 
-      - ${PWD}/horus/:/usr/src/
+      - ${PWD}/bff/:/usr/src/
     depends_on: 
       - kafka
 #___________________________________________________________________________________broker

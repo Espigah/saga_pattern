@@ -28,8 +28,8 @@ app.get("/", function (req, res) {
   res.send("server is running");
 });
 
-httpClient.listen(3000, function () {
-  console.log("socket listening on port 3000");
+httpClient.listen(5000, function () {
+  console.log("socket listening on port 5000");
 });
 
 room(io);

@@ -4,9 +4,10 @@ let clients = {};
 let consumer;
 
 const connection = (client) => {
-  const join = (name) => {
-    console.log("Joined: " + name);
-    clients[client.id] = name;
+  console.log("connection")
+  const join = () => {
+    console.log("Joined: ");
+    clients[client.id] = client;
     client.emit("update", "You have connected to the server.");
 
     consumerFactory.create().then((data) => {
@@ -27,7 +28,7 @@ const connection = (client) => {
     delete clients[client.id];
   };
 
-  client.on("join", join);
+  join()
   client.on("disconnect", disconnect);
 };
 

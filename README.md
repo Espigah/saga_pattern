@@ -33,5 +33,5 @@ https://livebook.manning.com/book/microservices-patterns/chapter-4/v-11/
 
 ```
 docker-compose exec kafka  \
-  bash -c "kafka-console-producer.sh --broker-list localhost:9092 --topic ORDER_CREATE_EVENT ORDER_CREATE_EVENT"
+  bash -c "kafka-console-producer.sh --broker-list localhost:9092 --topic ORDER_CREATE_EVENT"
 ```

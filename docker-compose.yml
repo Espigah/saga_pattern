@@ -88,8 +88,8 @@ services:
 
 #___________________________________________________________________________________ WEB
 
-  horus:
-    build: ./horus-kafka-observer/horus/
+  bff:
+    build: ./bff-kafka-observer/bff/
     ports:
       - 3000:3000
     environment: 

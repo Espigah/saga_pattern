@@ -1,5 +1,7 @@
 package order.service;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,8 @@ import javax.validation.constraints.NotNull;
 @Table(name = "Order")
 public class OrderEntity {
 
-    public OrderEntity() {}
+    public OrderEntity() {
+    }
 
     public OrderEntity(@NotNull String name) {
         this.name = name;
@@ -26,6 +29,13 @@ public class OrderEntity {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
+    @NotNull
+    @Column(name = "transaction_id", nullable = false, unique = true)
+    private UUID transactionId;
+
+    @NotNull
+    @Column(name = "transaction_status", nullable = false, unique = true)
+    private String transactionStatus;
 
     public Long getId() {
         return id;
@@ -43,11 +53,24 @@ public class OrderEntity {
         this.name = name;
     }
 
+    public UUID getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(UUID transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public String getTransactionStatus() {
+        return transactionStatus;
+    }
+
+    public void setTransactionStatus(String transactionStatus) {
+        this.transactionStatus = transactionStatus;
+    }
+
     @Override
     public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return "Order{" + "id=" + id + ", name='" + name + '\'' + '}';
     }
 }

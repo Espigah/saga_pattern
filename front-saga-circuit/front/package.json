@@ -1,0 +1,23 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "parcel build ./app/index.html",
+    "dev": "parcel ./app/index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gsap": "^3.2.6",
+    "socket.io-client": "^2.3.0"
+  },
+  "devDependencies": {
+    "sass": "^1.26.5"
+  }
+  "performance": {
+    "maxAssetSize": 500000,
+    "maxEntrypointSize": 500000
+  }
+}

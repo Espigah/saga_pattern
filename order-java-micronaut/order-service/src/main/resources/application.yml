@@ -4,26 +4,30 @@ micronaut:
 
 datasources:
   default:
-    url: ${JDBC_URL:`jdbc:h2:mem:default;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE`}
+    url: jdbc:postgresql://localhost:5432/db
     username: ${JDBC_USER:admin}
     password: ${JDBC_PASSWORD:admin}
-    driverClassName: ${JDBC_DRIVER:org.h2.Driver}
+    driverClassName: org.postgresql.Driver
     auto-commit: true
     maximum-pool-size: 50
     minimum-idle: 2
     idle-timeout: 600000
 
-#export JDBC_URL=jdbc:postgresql://localhost:5432/micronaut
-#export JDBC_USER=dbuser
-#export JDBC_PASSWORD=theSecretPassword
-#export JDBC_DRIVER=org.postgresql.Driver
+
 
 jpa:
   default:
     packages-to-scan:
-      - 'example.micronaut.domain'
+      - 'order.service'
     properties:
       hibernate:
         hbm2ddl:
-          auto: update
+          auto: create
         show_sql: true
+
+kafka:
+  bootstrap:
+    servers: "${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}"
+  producers:
+        default:
+            retries: 5

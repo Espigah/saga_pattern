@@ -4,27 +4,27 @@ import infraService from "../infra/infraService.js";
 
 const send = (topic, data) => {
   return new Promise((resolve, reject) => {
-    console.log("[ Producer::send ]");
+    console.log("[ producer::send ]", topic, data);
 
     if (!infraService.isBrokerEnable()) {
-      console.log("[ Producer::send ] disabled");
+      console.log("[ producer::send ] disabled");
       return reject("Broker disabled");
     }
 
     try {
       client.connect().then((producer) => {
-        console.log("[ Producer::sending ]");
+        console.log("[ producer::sending ]");
         producer.send([{ topic: topic, messages: data }], (err, data) => {
           if (err) {
-            console.log("[ Producer::send::err ]", err);
+            console.log("[ producer::send::err ]", err);
             return reject(err);
           }
-          console.log("[ Producer::send::ok ]", data);
+          console.log("[ producer::send::ok ]", data);
           resolve(data);
         });
       });
     } catch (error) {
-      console.log("[ send::Producer::err ]", err);
+      console.log("[ producer::err ]", err);
       reject(error);
     }
   });

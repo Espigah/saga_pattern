@@ -1,10 +1,10 @@
 version: '3.7'
 
 services:
-  order_service:
-    build: ./order-service/
-    ports:
-      - 8080:8080
+ # order_service:
+ #   build: ./order-service/
+ #   ports:
+ #     - 8080:8080
   #___________________________________________________________________________________Database
   postgres:
     image: postgres:9.6.17-alpine
@@ -14,7 +14,6 @@ services:
       POSTGRES_DB: db
     ports:
       - "5432:5432"
-      -
   #___________________________________________________________________________________broker
   zookeeper:
     image: wurstmeister/zookeeper

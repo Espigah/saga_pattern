@@ -4,30 +4,36 @@
     <meta charset="UTF-8" />
     <title>Title of the document</title>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-    <script>
-      const socket = io("http://localhost:5000");
-
-    
-      socket.on("connect", function (a) {
-        console.log(' >> connect',a);
-      });
-      socket.on("event", function (a) {
-        console.log('>> event',a);
-      });
-
-      socket.on("update", function (a) {
-        console.log(">> update",a);
-      });
-
-      
-      socket.on("disconnect", function (a) {
-        console.log(a);
-      });
-    </script>
+    <link
+      rel="stylesheet"
+      href="../node_modules/material-design-lite/material.min.css"
+    />
+    <script src="../node_modules/material-design-lite/material.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <script src="index.js"></script>
   </head>
 
   <body>
-    Content of the document......
+    <img src="./assets/cloud.svg" alt="Kiwi standing on oval">
+    <div class="footer">
+      <button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+      >
+        Button
+      </button>
+      <button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+      >
+        Button
+      </button>
+      <button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+      >
+        Button
+      </button>
+    </div>
   </body>
 </html>

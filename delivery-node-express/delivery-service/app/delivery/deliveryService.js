@@ -3,13 +3,7 @@ import producer from "../message-broker/producer.js";
 import infraService from "../infra/infraService.js";
 
 export default {
-  deliveryOrder({
-    nome,
-    order_id,
-    payment_id,
-    transaction_id,
-    transaction_status,
-  }) {
+  deliveryOrder(data) {
     if (!infraService.isDatabaseEnable()) {
       console.log("Database disabled");
       producer.sendFailure(data);
@@ -17,20 +11,15 @@ export default {
     }
 
     return deliveryRepository
-      .save({
-        nome,
-        order_id,
-        payment_id,
-        transaction_id,
-        transaction_status,
-      })
-      .then((data) => {
-        producer.sendSuccess(data);
+      .save(data)
+      .then((result) => {
+        producer.sendSuccess({ ...data, result });
         return data;
       })
       .catch((err) => {
-        producer.sendFailure(data);
-        return Promise.reject(err);
+        let error = { ...data, err };
+        producer.sendFailure(error);
+        return Promise.reject(error);
       });
   },
 };

@@ -7,6 +7,7 @@ from app.payment import payment_consumer
 app = FastAPI()
 
 
+
 @app.post('/disable/broker')
 async def disable_broker():
     infra_service.disable_broker()
@@ -15,7 +16,7 @@ async def disable_broker():
 
 @app.post('/disable/database')
 async def disable_database():
-    infra_service.disable_batabase()
+    infra_service.disable_database()
     return True
 
-payment_consumer.consumer();
+payment_consumer.consumer()

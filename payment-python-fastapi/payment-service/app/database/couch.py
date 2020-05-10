@@ -21,6 +21,18 @@ def _connect():
 
 
 def save(doc):
-    print("couch::save")
+    print("[ couch::save ]", doc)
     _connect()
     return db.save(doc)  # Saving document
+
+
+def find(mango):
+    print("[ couch::find ]", mango)
+    _connect()
+    return db.find(mango)
+
+
+def delete(doc):
+    print("[ couch::delete ]", doc)
+    _connect()
+    return db.delete(doc)

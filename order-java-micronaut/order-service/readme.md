@@ -1,1 +1,0 @@
-https://dzone.com/articles/micronaut-tutorial-server-application

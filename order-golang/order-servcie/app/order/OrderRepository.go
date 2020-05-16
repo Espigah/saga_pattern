@@ -15,8 +15,7 @@ func InsertOrder(orderEntity OrderEntity) OrderEntity {
 
 	sqlStatement := `
 	INSERT INTO  public."order" (detail, transaction_status)
-	VALUES ($1, $2)
-	RETURNING *`
+	VALUES ($1, $2)`
 
 	fmt.Printf("[ InsertOrder::entity ] %s - %s \n", orderEntity.Detail, orderEntity.TransactionStatus)
 

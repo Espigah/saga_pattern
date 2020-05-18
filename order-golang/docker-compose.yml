@@ -3,12 +3,12 @@ services:
   go:
     build:  ./order-servcie/
     environment:
-      DATABASE: host=localhost port=5432 user=admin password=admin dbname=db sslmode=disable
+      DATABASE: host=postgres port=5432 user=admin password=admin dbname=db sslmode=disable
       MESSAGE_BROKER: kafka:9092
-      TOPIC_SUCCESS: ORDER_BILLED_EVENT
-      TOPIC_FAILURE: ORDER_BILLED_FAILURE_EVENT
-      TOPIC_TRIGGER: ORDER_CREATE_EVENT
-      TOPIC_COMPENSATION_TRIGGER: ORDER_CREATE_FAILURE_EVENT
+      TOPIC_SUCCESS: ORDER_CREATE_EVENT
+      TOPIC_FAILURE: ORDER_CREATE_FAILURE_EVENT
+      TOPIC_TRIGGER: ORDER_BILLED_EVENT
+      TOPIC_COMPENSATION_TRIGGER: ORDER_BILLED_FAILURE_EVENT
       TOPIC_INFRA: INFRA_EVENT
     ports:
       - "8080:8080"

@@ -3,32 +3,26 @@ package messagebroker
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/segmentio/kafka-go"
 )
 
-func WriteMessages() {
-	w := kafka.NewWriter(kafka.WriterConfig{
-		Brokers:  []string{"kafka:9092"},
-		Topic:    "ORDER_CREATE_EVENT",
+func WriteMessages(topic string, message string) {
+	fmt.Println("[ WriteMessages ] " + topic)
+	fmt.Println("[ WriteMessages ] " + message)
+	producer := kafka.NewWriter(kafka.WriterConfig{
+		Brokers:  []string{os.Getenv("MESSAGE_BROKER")},
+		Topic:    topic,
 		Balancer: &kafka.LeastBytes{},
 	})
 
-	fmt.Println(w)
-	w.WriteMessages(context.Background(),
+	defer producer.Close()
+
+	producer.WriteMessages(context.Background(),
 		kafka.Message{
-			Key:   []byte("Key-A"),
-			Value: []byte("Hello World!"),
-		},
-		kafka.Message{
-			Key:   []byte("Key-B"),
-			Value: []byte("One!"),
-		},
-		kafka.Message{
-			Key:   []byte("Key-C"),
-			Value: []byte("Two!"),
+			Value: []byte(message),
 		},
 	)
 
-	w.Close()
 }

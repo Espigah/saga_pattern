@@ -18,7 +18,7 @@ func Insert(orderEntity OrderEntity) OrderEntity {
 	VALUES ($1, $2)
 	RETURNING id,detail, transaction_status, transaction_id, created, updated`
 
-	fmt.Printf("[ InsertOrder::entity ] %s - %s \n", orderEntity.Detail)
+	fmt.Printf("[ InsertOrder::entity ] %s \n", orderEntity.Detail)
 
 	var db *sql.DB = database.Connect()
 

@@ -19,8 +19,6 @@ func teste(value string) {
 func setupRouter() {
 	fmt.Printf("[ setupRouter ]")
 	router := mux.NewRouter()
-	router.HandleFunc("/order", order.FindAll).Methods("GET")
-	router.HandleFunc("/order/{id}", order.Find).Methods("GET")
 	router.HandleFunc("/order", order.Create).Methods("POST")
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 
 	"./messagebroker"
 	"./order"
@@ -25,8 +24,8 @@ func setupRouter() {
 
 func main() {
 
-	go messagebroker.Subscribe(os.Getenv("TOPIC_TRIGGER"), order.CreateListener(order.Status.BILLED))
-	go messagebroker.Subscribe(os.Getenv("TOPIC_COMPENSATION_TRIGGER"), order.CreateListener(order.Status.ABORTED))
+	go messagebroker.Subscribe(order.Topic.TOPIC_TRIGGER, order.CreateListener(order.Status.BILLED, order.Topic.TOPIC_CONCLUDE))
+	go messagebroker.Subscribe(order.Topic.TOPIC_COMPENSATION_TRIGGER, order.CreateListener(order.Status.ABORTED, ""))
 
 	setupRouter()
 }

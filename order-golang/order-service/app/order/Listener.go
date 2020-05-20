@@ -7,7 +7,7 @@ import (
 	"../messagebroker"
 )
 
-func CreateListener(status string) messagebroker.Action {
+func CreateListener(status string, topic string) messagebroker.Action {
 	return func(action string, commit func()) {
 		fmt.Println("[ CompensateListener ]")
 		fmt.Println(action)
@@ -21,6 +21,7 @@ func CreateListener(status string) messagebroker.Action {
 
 		UpdateStatusByTransactionId(orderEntity)
 
+		WriteMessages(orderEntity, topic)
 		commit()
 	}
 

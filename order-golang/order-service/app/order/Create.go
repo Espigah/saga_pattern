@@ -4,9 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
-
-	"../messagebroker"
 )
 
 // CreateOrder cria um novo contato
@@ -20,8 +17,7 @@ func Create(responseWriter http.ResponseWriter, request *http.Request) {
 
 	var result OrderEntity = Insert(orderEntity)
 
-	message, _ := json.Marshal(result)
-	messagebroker.WriteMessages(os.Getenv("TOPIC_SUCCESS"), string(message))
+	WriteMessages(result, Topic.TOPIC_SUCCESS)
 
 	json.NewEncoder(responseWriter).Encode(result)
 }

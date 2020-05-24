@@ -6,11 +6,12 @@ services:
     volumes:
       - ./bff/:/app/
     ports:
-      - 3000:3000
+      - 5000:5000
     environment: 
       MESSAGE_BROKER: kafka:9092
       OBSERVER: >
         ORDER_CREATE_EVENT
+        ORDER_CONCLUDE_EVENT
         ORDER_CREATE_FAILURE_EVENT
         ORDER_BILLED_EVENT
         ORDER_BILLED_FAILURE_EVENT

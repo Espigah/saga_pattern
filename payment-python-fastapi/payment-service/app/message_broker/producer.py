@@ -22,14 +22,14 @@ def _createProducer():
         return _createProducer()
 
 
-def send_success():
+def send_success(doc):
     print("producer:send_success")
-    _createProducer().send(os.getenv("TOPIC_SUCCESS"), {'foo': 'bar'})
+    _createProducer().send(os.getenv("TOPIC_SUCCESS"), doc)
 
 
-def send_failure():
+def send_failure(doc):
     print("producer:send_failure")
-    _createProducer().send(os.getenv("TOPIC_FAILURE"), {'foo': 'bar'})
+    _createProducer().send(os.getenv("TOPIC_FAILURE"), doc)
 
 
 def send_infra(where, who, what, value):

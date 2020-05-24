@@ -12,7 +12,7 @@ def execute_payment(value, commit):
 
     if value is None or "detail" not in value or "transaction_id" not in value:
         print("[ execute_payment ] invalid payload")
-        producer.send_failure()
+        producer.send_failure(value)
         return
 
     try:
@@ -29,8 +29,8 @@ def execute_payment(value, commit):
             raise Exception('database disabled')
 
         if infra_service.is_broker_enable():
-
-            producer.send_success()
+            print("[ execute_payment::send_success ]")
+            producer.send_success(doc)
             new_doc = {}
             new_doc.update(doc)
             new_doc.update({'_id': save_result[0], '_rev': save_result[1], 'status': 'EMITTED',
@@ -43,7 +43,7 @@ def execute_payment(value, commit):
 
     except Exception as e:
         print("[ execute_payment::failure ] ", e)
-        producer.send_failure()
+        producer.send_failure(doc)
         pass
 
 

@@ -18,7 +18,8 @@ RUN npm audit fix
 # Bundle app source
 COPY ./app .
 
-EXPOSE 3000
+#socket
+EXPOSE 5000 
 #CMD [ "node", "index.js" ]
 
 CMD [ "npm", "start" ]

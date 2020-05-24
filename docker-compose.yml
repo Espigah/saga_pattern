@@ -8,8 +8,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: admin
     ports:
       - "27017:27017"
-    networks:
-      - compose-network 
 
   postgres:
     build: ./order-golang/postgres/
@@ -65,6 +63,7 @@ services:
 #___________________________________________________________________________________ Applications
   payment_service:
     build: ./payment-python-fastapi/payment-service/
+    working_dir: /app
     depends_on: 
       - kafka
       - couchdb
@@ -114,16 +113,29 @@ services:
       - kafka
       - postgres
 
+ 
+
+
 #___________________________________________________________________________________ WEB
+  web:
+      build: ./front-saga-circuit/front/
+      ports:
+        - 80:80
+      environment: 
+        MESSAGE_BROKER: kafka:9092
+        SOCKET: bff:5000
+      depends_on: 
+        - bff
 
   bff:
     build: ./bff-kafka-observer/bff/
     ports:
-      - 3000:3000
+      - 5000:5000
     environment: 
       MESSAGE_BROKER: kafka:9092
       OBSERVER: >
         ORDER_CREATE_EVENT
+        ORDER_CONCLUDE_EVENT
         ORDER_CREATE_FAILURE_EVENT
         ORDER_BILLED_EVENT
         ORDER_BILLED_FAILURE_EVENT

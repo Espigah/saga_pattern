@@ -1,20 +1,30 @@
-import './index.scss'
-import io from 'socket.io-client';
+import "./index.scss";
+import socket from "./socket.js";
 
 import { gsap, ScrollToPlugin, Draggable, MotionPathPlugin } from "gsap/all";
-gsap.registerPlugin(ScrollToPlugin, Draggable, MotionPathPlugin); 
+gsap.registerPlugin(ScrollToPlugin, Draggable, MotionPathPlugin);
 
-io.on("connect", function (a) {
-  console.log(" >> connect", a);
-});
-io.on("event", function (a) {
-  console.log(">> event", a);
-});
+socket();
 
-io.on("update", function (a) {
-  console.log(">> update", a);
-});
+const createOrderButton = document.querySelector(".create-order");
+createOrderButton.addEventListener("click", createOrder);
 
-io.on("disconnect", function (a) {
-  console.log(a);
-});
+function createOrder() {
+  var myInit = {
+    method: "POST",
+    header: {
+      'credentials': 'include',
+      'csrf-token': window.csrf || '',
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ detail: "Order - " + new Date().toISOString() }),
+  };
+  fetch("/order/", myInit)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (myBlob) {
+      console.log("[ERROR]", myBlob);
+    });
+}

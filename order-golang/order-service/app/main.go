@@ -11,10 +11,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func teste(value string) {
-	fmt.Printf("teste = %s\n", value)
-}
-
 func setupRouter() {
 	fmt.Printf("[ setupRouter ]")
 	router := mux.NewRouter()

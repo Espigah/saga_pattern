@@ -1,0 +1,28 @@
+my-card {
+  .mdl-card {
+    height: 100px;
+    transform: translateX(-50%);
+    left: 50%;
+  }
+  
+  .system-icon {
+    width: 45px;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+    position: relative;
+  }
+
+  .platform-icon {
+    width: auto;
+    height: 20px;
+  }
+  .mdl-card__media{
+    min-height: 45px;
+  }
+
+  .mdl-button{
+    float: right;
+    height:  20px;
+  }
+}

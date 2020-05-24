@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "parcel build ./app/index.html",
-    "dev": "parcel ./app/index.html"
+    "build": "npm run cleanup && parcel build ./app/index.html",
+    "cleanup": "rm -rf .cache dist",
+    "dev": "npm run cleanup && parcel ./app/index.html"
   },
   "author": "",
   "license": "ISC",
@@ -14,8 +15,9 @@
     "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
+    "cssnano": "^4.1.10",
     "sass": "^1.26.5"
-  }
+  },
   "performance": {
     "maxAssetSize": 500000,
     "maxEntrypointSize": 500000

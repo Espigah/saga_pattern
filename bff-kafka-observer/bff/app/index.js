@@ -5,7 +5,6 @@ import http from "http";
 import room from "./room.js";
 import dotenv from "dotenv";
 
-
 if (process.env.APP_DEBUG) {
   dotenv.config();
 }

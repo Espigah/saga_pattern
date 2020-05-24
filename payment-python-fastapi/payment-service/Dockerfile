@@ -2,7 +2,7 @@ FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7
 
 EXPOSE 80
 
-COPY ./app /app
+COPY . /app
 
 COPY ./requirements.txt /app/requirements.txt
 

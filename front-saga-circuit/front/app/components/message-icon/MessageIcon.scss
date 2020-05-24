@@ -1,0 +1,26 @@
+message-icon {
+  z-index: 150;
+  position: fixed;
+  img {
+    z-index: 1 50;
+    width: 30px;
+  }
+  .message-icon-backgound {
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: absolute;
+    z-index: -1;
+    padding: 4px;
+    left: -4px;
+    top: -4px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-border-radius: 99em;
+    -moz-border-radius: 99em;
+    border-radius: -99em;
+    box-shadow: inset 0 0 0 5px rgba(8, 156, 255, 0.73);
+    background-color: rgba(255, 255, 255, 0.73);
+  }
+}

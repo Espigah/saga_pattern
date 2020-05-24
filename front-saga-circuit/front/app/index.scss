@@ -1,14 +1,74 @@
-.footer{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    bottom: 0;
-    position: absolute;
-    width: 100vw;
-    height: 80px;
+$offset: 60px;
 
+.footer {
+  z-index: 100;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  bottom: 0;
+  position: absolute;
+  width: 100vw;
+  height: 80px;
 }
 
-.mdl-button{
-    margin: 0 10px;
+.mdl-button {
+  margin: 0 10px;
 }
+
+.midle-pivot {
+  transform: translate(-50%, -50%);
+}
+
+.center-y {
+  position: absolute;
+  top: 50%;
+}
+
+.right {
+  left: 70%;
+}
+
+.left {
+  left: $offset;
+}
+
+.right-side {
+  background: rgb(245, 244, 244);
+}
+
+.left-side {
+  background:rgb(245, 244, 244);
+}
+
+.middle-side {
+  background: rgb(240, 239, 239);
+}
+
+.mom {
+  @extend .midle-pivot;
+  @extend .center-y;
+  @extend .right;
+  width: 200px;
+}
+
+.database {
+  height: 100px;
+  @extend .midle-pivot;
+  @extend .center-y;
+  @extend .left;
+  &:first-child {
+    margin-top: -200px;
+  }
+  &:last-child {
+    margin-top: 200px;
+  }
+}
+
+.mom-container,.database-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+@import "./components/card-component/CardComponent.scss";
+@import "./components/message-icon/MessageIcon.scss";

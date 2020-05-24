@@ -7,8 +7,10 @@ services:
         - 80:80
       environment: 
         MESSAGE_BROKER: kafka:9092
+        SOCKET: bff:5000
       depends_on: 
         - bff
+
 #___________________________________________________________________________________broker
   bff:
     build: ../bff-kafka-observer/bff/
@@ -18,6 +20,7 @@ services:
       MESSAGE_BROKER: kafka:9092
       OBSERVER: >
         ORDER_CREATE_EVENT
+        ORDER_CONCLUDE_EVENT
         ORDER_CREATE_FAILURE_EVENT
         ORDER_BILLED_EVENT
         ORDER_BILLED_FAILURE_EVENT
@@ -26,6 +29,33 @@ services:
         INFRA_EVENT
     depends_on: 
       - kafka
+
+  order_service:
+    build: ../order-golang/order-service/
+    environment:
+      DATABASE: host=postgres port=5432 user=admin password=admin dbname=db sslmode=disable
+      MESSAGE_BROKER: kafka:9092
+      TOPIC_SUCCESS: ORDER_CREATE_EVENT
+      TOPIC_CONCLUDE: ORDER_CONCLUDE_EVENT
+      TOPIC_FAILURE: ORDER_CREATE_FAILURE_EVENT
+      TOPIC_TRIGGER: ORDER_BILLED_EVENT
+      TOPIC_COMPENSATION_TRIGGER: ORDER_BILLED_FAILURE_EVENT
+      TOPIC_INFRA: INFRA_EVENT
+    ports:
+      - "8080:8080"
+    depends_on: 
+      - kafka
+      - postgres
+
+  postgres:
+    build: ../order-golang/postgres/
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
+
 #___________________________________________________________________________________broker
   zookeeper:
     image: wurstmeister/zookeeper
@@ -40,7 +70,7 @@ services:
       - "9092:9092"
     hostname: kafka
     environment:
-      KAFKA_CREATE_TOPICS: "ORDER_CREATE_EVENT:1:1,ORDER_CREATE_FAILURE_EVENT:1:1,ORDER_BILLED_EVENT:1:1,ORDER_BILLED_FAILURE_EVENT:1:1,ORDER_DELIVERED_EVENT:1:1,ORDER_DELIVERED_FAILURE_EVENT:1:1,INFRA_EVENT:1:1"
+      KAFKA_CREATE_TOPICS: "ORDER_CONCLUDE_EVENT:1:1,ORDER_CREATE_EVENT:1:1,ORDER_CREATE_FAILURE_EVENT:1:1,ORDER_BILLED_EVENT:1:1,ORDER_BILLED_FAILURE_EVENT:1:1,ORDER_DELIVERED_EVENT:1:1,ORDER_DELIVERED_FAILURE_EVENT:1:1,INFRA_EVENT:1:1"
       KAFKA_ADVERTISED_HOST_NAME: kafka # docker-machine ip
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_PORT: 9092
@@ -57,4 +87,3 @@ services:
       KAFKA_BROKERCONNECT: kafka:9092
     depends_on: 
       - kafka
-  

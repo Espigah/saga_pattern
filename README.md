@@ -25,22 +25,22 @@
 
 ### delivery-node-express
 
-* Faz a entrega do pedido. Puramente retirable.
+* Faz a entrega do pedido. Puramente para testar fluxo com retentativa.
 * Feito com nodejs + express + mongo + kafka.
 
 ### front-saga-circuit
 
-* Interface para testar os possiveis fluxos
+* Interface para testar os possíveis fluxos
 * Feito com js + sass + parsel + socket.io.
 
 ### order-golang
 
-* Responsavel pela criação e cancelamento (via fluxo de compensação) de pedido.
+* Responsável pela criação e cancelamento (via fluxo de compensação) de pedido.
 * Feito com golang (go) + postgresql + kafka.
 
 ### payment-python-fastapi
 
-* Responsavel por confirmar o pagamento do pedido.
+* Responsável por confirmar o pagamento do pedido.
 * Feito com payhton 3 + fastAPI + couchDB + kafka.
 
 # LITTLE READ

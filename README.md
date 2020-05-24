@@ -17,6 +17,32 @@
 
 ![Error flow - order error](./docs/saga_ERROR_2.jpg)
 
+# Aplicações
+
+### bff-kafka-observer
+
+* Apenas observar os eventos do kafka e manda pra interface via socket
+
+### delivery-node-express
+
+* Faz a entrega do pedido. Puramente retirable.
+* Feito com nodejs + express + mongo + kafka.
+
+### front-saga-circuit
+
+* Interface para testar os possiveis fluxos
+* Feito com js + sass + parsel + socket.io.
+
+### order-golang
+
+* Responsavel pela criação e cancelamento (via fluxo de compensação) de pedido.
+* Feito com golang (go) + postgresql + kafka.
+
+### payment-python-fastapi
+
+* Responsavel por confirmar o pagamento do pedido.
+* Feito com payhton 3 + fastAPI + couchDB + kafka.
+
 # LITTLE READ
 
 https://cloudnweb.dev/2020/01/implementing-saga-pattern-in-nodejs-microservices/
@@ -50,4 +76,8 @@ docker-compose exec kafka  \
 docker-compose exec kafka  \
   bash -c "kafka-console-producer.sh --broker-list localhost:9092 --topic ORDER_DELIVERED_FAILURE_EVENT"
 ```
+
+# youtube
+
+[![alt text](https://img.youtube.com/vi/9xhZW3S3uWY/0.jpg)](https://www.youtube.com/watch?v=9xhZW3S3uWY&feature=youtu.be "title")
 

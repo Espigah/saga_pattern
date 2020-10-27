@@ -14,7 +14,7 @@ chardet==3.0.4
 colorama==0.4.1
 configparser==4.0.2
 CouchDB==1.2
-cryptography==2.8
+cryptography==3.2
 decorator==4.4.2
 defusedxml==0.6.0
 docutils==0.15.2

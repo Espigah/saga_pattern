@@ -62,7 +62,7 @@ ptyprocess==0.6.0
 pyasn1==0.4.8
 pycodestyle==2.5.0
 pycparser==2.19
-pydantic==1.5.1
+pydantic==1.6.2
 Pygments==2.6.1
 pylint==2.4.4
 pyodbc==4.0.30
